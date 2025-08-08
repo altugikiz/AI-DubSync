@@ -1,0 +1,56 @@
+# Core dependencies
+moviepy>=1.0.3
+yt-dlp>=2023.7.6
+
+# Google Cloud APIs
+google-cloud-speech>=2.21.0
+google-cloud-translate>=3.12.0
+google-cloud-texttospeech>=2.14.0
+google-auth>=2.17.0
+google-auth-oauthlib>=1.0.0
+google-auth-httplib2>=0.1.0
+
+# LangGraph for workflow orchestration
+langgraph>=0.0.40
+langchain>=0.1.0
+langchain-core>=0.1.0
+
+# Environment and configuration
+python-dotenv>=1.0.0
+
+# Audio/Video processing
+ffmpeg-python>=0.2.0
+
+# HTTP requests and utilities
+requests>=2.31.0
+urllib3>=2.0.0
+
+# Data handling
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Progress bars and CLI utilities
+tqdm>=4.65.0
+
+# JSON handling (if needed)
+jsonschema>=4.17.0
+
+# Async support (if using async features)
+aiohttp>=3.8.0
+aiofiles>=23.0.0
+
+# Logging and debugging
+colorama>=0.4.6
+rich>=13.0.0
+
+# Type hints support
+typing-extensions>=4.5.0
+
+# Testing (optional, for development)
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+
+# Development tools (optional)
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.0.0

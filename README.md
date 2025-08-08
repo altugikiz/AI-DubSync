@@ -1,127 +1,127 @@
 # AI-DubSync 🎬🔊
 
-**AI-DubSync**, YouTube videolarını otomatik olarak farklı dillere seslendiren yapay zeka destekli bir uygulamadır. Video indirme, ses çıkarma, transkripsiyon, çeviri ve yapay zeka seslendirimini tek bir akışta gerçekleştirir.
+**AI-DubSync** is an AI-powered application that automatically dubs YouTube videos into different languages. It performs video downloading, audio extraction, transcription, translation, and AI voice synthesis in a single workflow.
 
-## 🌟 Özellikler
+## 🌟 Features
 
-- 📹 **YouTube Video İndirme**: yt-dlp kullanarak yüksek kaliteli video indirme
-- 🎵 **Otomatik Ses Çıkarma**: MoviePy ile videolardan ses dosyası çıkarma
-- 📝 **Akıllı Transkripsiyon**: Google Cloud Speech-to-Text API ile ses-metin dönüşümü
-- 🌍 **Çoklu Dil Çevirisi**: Google Translate API ile metinleri farklı dillere çevirme
-- 🗣️ **Yapay Zeka Seslendirim**: Google Text-to-Speech ile doğal ses üretimi
-- 🎬 **Otomatik Video Birleştirme**: Yeni seslendirme ile orijinal videoyu birleştirme
-- 🔄 **Akış Tabanlı İşleme**: LangGraph ile organize edilmiş iş akışı
+- 📹 **YouTube Video Download**: High-quality video downloading using yt-dlp
+- 🎵 **Automatic Audio Extraction**: Audio file extraction from videos using MoviePy
+- 📝 **Smart Transcription**: Speech-to-text conversion using Google Cloud Speech-to-Text API
+- 🌍 **Multi-language Translation**: Text translation to different languages using Google Translate API
+- 🗣️ **AI Voice Synthesis**: Natural voice generation using Google Text-to-Speech
+- 🎬 **Automatic Video Merging**: Combining new voiceover with original video
+- 🔄 **Flow-based Processing**: Organized workflow using LangGraph
 
-## 🏗️ Proje Yapısı
+## 🏗️ Project Structure
 
 ```
 AI-DubSync/
 ├── src/
-│   ├── graph.py              # Ana iş akışı grafiği
+│   ├── graph.py              # Main workflow graph
 │   ├── tools/
-│   │   ├── media_tools.py    # Video/ses işleme araçları
-│   │   ├── transcription_tools.py  # Transkripsiyon araçları
-│   │   ├── translation_tools.py    # Çeviri araçları
-│   │   └── tts_tools.py      # Metin-ses dönüşüm araçları
+│   │   ├── media_tools.py    # Video/audio processing tools
+│   │   ├── transcription_tools.py  # Transcription tools
+│   │   ├── translation_tools.py    # Translation tools
+│   │   └── tts_tools.py      # Text-to-speech tools
 │   └── nodes/
-│       ├── video_processor.py      # Video işleme düğümü
-│       ├── transcription_node.py   # Transkripsiyon düğümü
-│       ├── translation_node.py     # Çeviri düğümü
-│       └── tts_node.py            # TTS düğümü
-├── main.py                   # Ana uygulama dosyası
-├── .env                     # Çevre değişkenleri (API anahtarları)
-└── requirements.txt         # Python bağımlılıkları
+│       ├── video_processor.py      # Video processing node
+│       ├── transcription_node.py   # Transcription node
+│       ├── translation_node.py     # Translation node
+│       └── tts_node.py            # TTS node
+├── main.py                   # Main application file
+├── .env                     # Environment variables (API keys)
+└── requirements.txt         # Python dependencies
 ```
 
-## 🛠️ Teknoloji Yığını
+## 🛠️ Technology Stack
 
-- **Python 3.8+** - Ana programlama dili
-- **yt-dlp** - YouTube video indirme
-- **MoviePy** - Video/ses işleme
+- **Python 3.8+** - Main programming language
+- **yt-dlp** - YouTube video downloading
+- **MoviePy** - Video/audio processing
 - **Google Cloud APIs** - Speech-to-Text, Translate, Text-to-Speech
-- **LangGraph** - İş akışı orchestration
+- **LangGraph** - Workflow orchestration
 - **FFmpeg** - Media processing backend
 
-## 🚀 Kurulum
+## 🚀 Installation
 
-### 1. Depoyu Klonlayın
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/your-username/AI-DubSync.git
 cd AI-DubSync
 ```
 
-### 2. Sanal Ortam Oluşturun
+### 2. Create Virtual Environment
 ```bash
 python -m venv venv
 venv\Scripts\activate  # Windows
 # source venv/bin/activate  # Linux/Mac
 ```
 
-### 3. Bağımlılıkları Yükleyin
+### 3. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. FFmpeg Kurulumu
-FFmpeg'i sistem PATH'inize ekleyin:
-- Windows: [FFmpeg indirin](https://ffmpeg.org/download.html) ve PATH'e ekleyin
-- Chocolatey ile: `choco install ffmpeg`
+### 4. FFmpeg Installation
+Add FFmpeg to your system PATH:
+- Windows: [Download FFmpeg](https://ffmpeg.org/download.html) and add to PATH
+- With Chocolatey: `choco install ffmpeg`
 
-### 5. Google Cloud Ayarları
+### 5. Google Cloud Setup
 
-#### API Anahtarlarını Alın:
-1. [Google Cloud Console](https://console.cloud.google.com/) hesap oluşturun
-2. Yeni bir proje oluşturun
-3. Aşağıdaki API'leri etkinleştirin:
+#### Get API Keys:
+1. Create a [Google Cloud Console](https://console.cloud.google.com/) account
+2. Create a new project
+3. Enable the following APIs:
    - Speech-to-Text API
    - Translation API  
    - Text-to-Speech API
-4. Service Account oluşturun ve JSON key dosyasını indirin
+4. Create a Service Account and download the JSON key file
 
-#### Çevre Değişkenlerini Ayarlayın:
-`.env` dosyası oluşturun:
+#### Set Environment Variables:
+Create a `.env` file:
 ```env
 GOOGLE_API_KEY=your_google_api_key_here
 GOOGLE_APPLICATION_CREDENTIALS=path/to/your/service-account-key.json
 ```
 
-## 💻 Kullanım
+## 💻 Usage
 
-### Temel Kullanım
+### Basic Usage
 ```bash
 python main.py
 ```
 
-### Kod İçinde Özelleştirme
+### Customization in Code
 ```python
-# main.py dosyasında ayarları değiştirin
+# Change settings in main.py file
 test_url = "https://www.youtube.com/watch?v=VIDEO_ID"
-target_lang = "Turkish"  # veya "English", "Spanish", "French" vb.
+target_lang = "Turkish"  # or "English", "Spanish", "French" etc.
 ```
 
-## 🔧 İş Akışı
+## 🔧 Workflow
 
-1. **Video İndirme** 📥
-   - YouTube URL'sinden video indirilir
-   - Ses dosyası otomatik olarak çıkarılır
+1. **Video Download** 📥
+   - Video is downloaded from YouTube URL
+   - Audio file is automatically extracted
 
-2. **Transkripsiyon** 🎤
-   - Google Speech-to-Text API ile ses metne dönüştürülür
-   - Zaman damgaları korunur
+2. **Transcription** 🎤
+   - Audio is converted to text using Google Speech-to-Text API
+   - Timestamps are preserved
 
-3. **Çeviri** 🌐
-   - Google Translate API ile hedef dile çeviri
-   - Bağlam korunarak doğru çeviri
+3. **Translation** 🌐
+   - Translation to target language using Google Translate API
+   - Context-aware accurate translation
 
-4. **Seslendirme** 🗣️
-   - Google Text-to-Speech ile doğal ses üretimi
-   - Çeşitli ses seçenekleri
+4. **Voice Synthesis** 🗣️
+   - Natural voice generation using Google Text-to-Speech
+   - Various voice options available
 
-5. **Video Birleştirme** 🎬
-   - Yeni seslendirme orijinal video ile birleştirilir
-   - Kaliteli çıktı formatı
+5. **Video Merging** 🎬
+   - New voiceover is combined with original video
+   - High-quality output format
 
-## 📋 Gereksinimler
+## 📋 Requirements
 
 ```txt
 moviepy>=1.0.3
@@ -132,51 +132,51 @@ google-cloud-texttospeech>=2.0.0
 langgraph>=0.1.0
 ```
 
-## 🤝 Katkı Sağlama
+## 🤝 Contributing
 
-1. Projeyi fork edin
-2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'Add amazing feature'`)
-4. Branch'inizi push edin (`git push origin feature/amazing-feature`)
-5. Pull Request açın
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## ⚠️ Önemli Notlar
+## ⚠️ Important Notes
 
-- Google Cloud API'larının kullanım kotaları ve ücretlendirmesi vardır
-- YouTube videolarının telif hakkı kurallarına dikkat edin
-- Büyük video dosyaları için yeterli disk alanı bulundurun
-- İnternet bağlantısı tüm işlemler için gereklidir
+- Google Cloud APIs have usage quotas and pricing
+- Be mindful of YouTube video copyright regulations
+- Ensure sufficient disk space for large video files
+- Internet connection is required for all operations
 
-## 📄 Lisans
+## 📄 License
 
-Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için `LICENSE` dosyasına bakın.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
-## 🆘 Sorun Giderme
+## 🆘 Troubleshooting
 
-### Yaygın Hatalar:
+### Common Errors:
 
 **HTTP Error 400: Bad Request**
-- yt-dlp'yi güncelleyin: `pip install --upgrade yt-dlp`
-- Video URL'sinin doğruluğunu kontrol edin
+- Update yt-dlp: `pip install --upgrade yt-dlp`
+- Check video URL validity
 
-**MoviePy Import Hatası**
-- FFmpeg'in doğru kurulduğunu kontrol edin
-- `pip install moviepy` ile yeniden yükleyin
+**MoviePy Import Error**
+- Verify FFmpeg is properly installed
+- Reinstall with `pip install moviepy`
 
-**Google API Hataları**
-- API anahtarlarınızın doğruluğunu kontrol edin
-- Service account JSON dosyasının yolunu kontrol edin
-- API kotalarınızı Google Cloud Console'dan kontrol edin
+**Google API Errors**
+- Check API key validity
+- Verify service account JSON file path
+- Check API quotas in Google Cloud Console
 
-## 🔮 Gelecek Özellikler
+## 🔮 Future Features
 
-- [ ] Web arayüzü (Streamlit/Flask)
-- [ ] Batch video işleme
-- [ ] Özel ses modelleri
-- [ ] Subtitle/altyazı desteği
-- [ ] Farklı video platformları desteği
+- [ ] Web interface (Streamlit/Flask)
+- [ ] Batch video processing
+- [ ] Custom voice models
+- [ ] Subtitle support
+- [ ] Different video platform support
 - [ ] Docker containerization
 
 ---
 
-⭐ **Beğendiyseniz yıldız vermeyi unutmayın!** ⭐
+⭐ **Don't forget to star if you liked it!** ⭐
