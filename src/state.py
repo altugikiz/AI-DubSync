@@ -16,6 +16,7 @@ class AppState(TypedDict):
     transcription: str
     translated_text: str
     dubbed_audio_path: str
+    final_video_path: str
     
     # To handle potential issues
     error: str | None
