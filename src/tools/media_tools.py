@@ -1,6 +1,8 @@
 import os
 import yt_dlp
 from moviepy.editor import VideoFileClip
+from moviepy.editor import VideoFileClip, AudioFileClip
+
 
 def download_video_and_extract_audio(url: str, output_dir: str) -> dict:
     """
@@ -53,5 +55,48 @@ def download_video_and_extract_audio(url: str, output_dir: str) -> dict:
     except Exception as e:
         # Catching yt-dlp specific errors or any other exception
         error_message = f"An error occurred in yt-dlp or moviepy: {e}"
+        print(f"ERROR in media_tools: {error_message}")
+        return {"error": error_message}
+    
+
+
+def combine_video_and_audio(video_path: str, audio_path: str, output_path: str) -> dict:
+    """
+    A tool that combines a video file with a new audio track.
+    
+    Args:
+        video_path (str): Path to the original video file (without its original audio).
+        audio_path (str): Path to the new audio file to be added.
+        output_path (str): Path to save the final, combined video file.
+
+    Returns:
+        dict: A dictionary with the path to the final video file.
+              Returns {'error': message} on failure.
+    """
+    try:
+        print("Tool: Combining final video and dubbed audio...")
+        
+        # Load the original video clip
+        video_clip = VideoFileClip(video_path)
+        
+        # Load the new dubbed audio clip
+        dubbed_audio_clip = AudioFileClip(audio_path)
+        
+        # Set the audio of the video clip to our new audio
+        final_clip = video_clip.set_audio(dubbed_audio_clip)
+        
+        # Write the result to a file
+        final_clip.write_videofile(output_path, codec='libx264', audio_codec='aac', logger=None)
+        
+        # Close the clips to free up resources
+        video_clip.close()
+        dubbed_audio_clip.close()
+        final_clip.close()
+        
+        print(f"Tool: Final video successfully saved to {output_path}")
+        return {"final_video_path": output_path}
+
+    except Exception as e:
+        error_message = f"An error occurred during video-audio combination: {e}"
         print(f"ERROR in media_tools: {error_message}")
         return {"error": error_message}
