@@ -4,6 +4,7 @@ from src.nodes.video_processing import process_video_node
 from src.nodes.transcription import transcription_node
 from src.nodes.translation import translation_node
 from src.nodes.synthesis import synthesis_node
+from src.nodes.final_video import final_video_node
 
 def create_graph():
     """
@@ -23,6 +24,7 @@ def create_graph():
     workflow.add_node("transcriber", transcription_node)
     workflow.add_node("translator", translation_node)
     workflow.add_node("synthesizer", synthesis_node)
+    workflow.add_node("final_video_assembler", final_video_node)
 
     # --- Define Edges ---
     # This defines the sequence of operations.
@@ -35,6 +37,7 @@ def create_graph():
     workflow.add_edge("video_processor", "transcriber")
     workflow.add_edge("transcriber", "translator")
     workflow.add_edge("translator", "synthesizer")
+    workflow.add_edge("synthesizer", "final_video_assembler")
     
     # After 'transcriber' completes, the graph should finish
     workflow.add_edge("transcriber", END)
