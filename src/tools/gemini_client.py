@@ -1,6 +1,7 @@
 import os
 import time
 import google.generativeai as genai
+from google.cloud import texttospeech
 from dotenv import load_dotenv
 
 # Load and configure the API at the module level
@@ -84,5 +85,57 @@ def translate_text(text_to_translate: str, target_language: str) -> dict:
 
     except Exception as e:
         error_message = f"An error occurred during translation: {e}"
+        print(f"ERROR in gemini_client: {error_message}")
+        return {"error": error_message}
+    
+
+def text_to_speech(text_to_synthesize: str, language_code: str, output_path: str) -> dict:
+    """
+    Synthesizes speech from text using Google Cloud Text-to-Speech.
+    
+    Args:
+        text_to_synthesize (str): The text to be synthesized.
+        language_code (str): The BCP-47 language code (e.g., 'tr-TR' for Turkish).
+        output_path (str): The path to save the output MP3 file.
+
+    Returns:
+        dict: A dictionary with the path to the audio file.
+              Returns {'error': message} on failure.
+    """
+    try:
+        print(f"Tool: Synthesizing speech for language '{language_code}'...")
+        
+        # Instantiate a client
+        client = texttospeech.TextToSpeechClient()
+        
+        # Set the text input to be synthesized
+        synthesis_input = texttospeech.SynthesisInput(text=text_to_synthesize)
+        
+        # Build the voice request, select the language and a high-quality voice
+        # WaveNet voices are Google's most natural-sounding voices.
+        voice = texttospeech.VoiceSelectionParams(
+            language_code=language_code, 
+            name=f"{language_code}-Wavenet-A" # Example: 'tr-TR-Wavenet-A' (Male voice)
+        )
+        
+        # Select the type of audio file you want
+        audio_config = texttospeech.AudioConfig(
+            audio_encoding=texttospeech.AudioEncoding.MP3
+        )
+        
+        # Perform the text-to-speech request
+        response = client.synthesize_speech(
+            input=synthesis_input, voice=voice, audio_config=audio_config
+        )
+        
+        # The response's audio_content is binary.
+        with open(output_path, "wb") as out:
+            out.write(response.audio_content)
+            
+        print(f"Tool: Speech synthesized and saved to {output_path}")
+        return {"dubbed_audio_path": output_path}
+
+    except Exception as e:
+        error_message = f"An error occurred during Text-to-Speech synthesis: {e}"
         print(f"ERROR in gemini_client: {error_message}")
         return {"error": error_message}
