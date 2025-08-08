@@ -6,10 +6,18 @@
 .env.production
 *.env
 
+# Google Cloud credentials and service account keys
+service-account-key.json
+*-service-account*.json
+google-credentials.json
+*.pem
+*.p12
+
 # API keys and configuration files
 config.json
 secrets.json
 credentials.json
+apikey.txt
 
 # Python
 __pycache__/
@@ -41,6 +49,7 @@ ENV/
 env.bak/
 venv.bak/
 .venv/
+.virtualenv/
 
 # PyTorch/TensorFlow models and data
 *.pth
@@ -52,6 +61,7 @@ models/
 checkpoints/
 data/
 datasets/
+weights/
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -77,12 +87,23 @@ yarn.lock
 *.aac
 *.ogg
 *.webm
+*.flac
+
+# Output directories for processed media
+output/
+downloads/
+temp_downloads/
+processed/
+extracted_audio/
+generated_audio/
+final_output/
 
 # Temporary files
 *.tmp
 *.temp
 temp/
 tmp/
+.temp/
 
 # OS generated files
 .DS_Store
@@ -98,29 +119,118 @@ desktop.ini
 .vscode/settings.json
 .vscode/launch.json
 .vscode/tasks.json
+.vscode/*.json
+!.vscode/extensions.json
 .idea/
 *.swp
 *.swo
 *~
+*.sublime-project
+*.sublime-workspace
 
 # Logs
 *.log
 logs/
 log/
+*.log.*
 
 # Cache directories
 .cache/
 .pytest_cache/
 .coverage
 htmlcov/
+.tox/
+.nox/
 
 # AI/ML specific
 wandb/
 mlruns/
 .mlflow/
 tensorboard_logs/
+runs/
 
 # FFmpeg and audio processing
 ffmpeg_output/
 processed_audio/
 temp_audio/
+audio_cache/
+
+# YouTube downloads cache
+youtube_cache/
+yt_cache/
+
+# Translation and TTS cache
+translation_cache/
+tts_cache/
+speech_cache/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# Documentation builds
+docs/_build/
+site/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
