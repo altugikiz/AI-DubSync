@@ -1,10 +1,10 @@
 import os
-from pytube import YouTube
+import yt_dlp
 from moviepy.editor import VideoFileClip
 
 def download_video_and_extract_audio(url: str, output_dir: str) -> dict:
     """
-    A tool that downloads a YouTube video and extracts its audio.
+    A tool that downloads a YouTube video using yt-dlp and extracts its audio.
     
     Args:
         url (str): The YouTube video URL.
@@ -15,15 +15,31 @@ def download_video_and_extract_audio(url: str, output_dir: str) -> dict:
               Returns {'error': message} on failure.
     """
     try:
-        print(f"Tool: Downloading video from {url}")
-        yt = YouTube(url)
-        stream = yt.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
-        
         video_filename = "original_video.mp4"
         video_path = os.path.join(output_dir, video_filename)
-        stream.download(output_path=output_dir, filename=video_filename)
-        print(f"Tool: Video saved to {video_path}")
+        
+        # --- Video Download with yt-dlp ---
+        print(f"Tool: Downloading video using yt-dlp from {url}")
+        
+        # Options for yt-dlp
+        # We want the best video format that includes audio, in mp4 format.
+        ydl_opts = {
+            'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best',
+            'outtmpl': video_path,
+            'quiet': True, # Suppress console output from yt-dlp
+            'merge_output_format': 'mp4',
+            'overwrites': True, # Overwrite file if it exists
+        }
 
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+        
+        print(f"Tool: Video saved to {video_path}")
+        
+        if not os.path.exists(video_path):
+             raise FileNotFoundError("yt-dlp failed to download the video file.")
+
+        # --- Audio Extraction (MoviePy part remains the same) ---
         print("Tool: Extracting audio...")
         video_clip = VideoFileClip(video_path)
         audio_filename = "original_audio.mp3"
@@ -35,5 +51,7 @@ def download_video_and_extract_audio(url: str, output_dir: str) -> dict:
         return {"video_path": video_path, "audio_path": audio_path}
 
     except Exception as e:
-        print(f"ERROR in media_tools: {e}")
-        return {"error": str(e)}
+        # Catching yt-dlp specific errors or any other exception
+        error_message = f"An error occurred in yt-dlp or moviepy: {e}"
+        print(f"ERROR in media_tools: {error_message}")
+        return {"error": error_message}
