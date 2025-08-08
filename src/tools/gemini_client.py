@@ -52,3 +52,37 @@ def transcribe_audio_file(audio_path: str) -> dict:
     except Exception as e:
         print(f"ERROR in gemini_client: {e}")
         return {"error": str(e)}
+    
+
+def translate_text(text_to_translate: str, target_language: str) -> dict:
+    """
+    A tool that translates a given text to a target language using Gemini.
+    
+    Args:
+        text_to_translate (str): The text to be translated.
+        target_language (str): The language to translate the text into.
+
+    Returns:
+        dict: A dictionary with the translated text.
+              Returns {'error': message} on failure.
+    """
+    try:
+        print(f"Tool: Translating text to {target_language}...")
+        
+        # We use a standard generative model for this text-to-text task
+        model = genai.GenerativeModel(model_name="models/gemini-1.5-pro-latest")
+        
+        # A clear and direct prompt for translation
+        prompt = (f"Translate the following English text into {target_language}. "
+                  f"Provide only the translated text, without any additional comments or explanations.\n\n"
+                  f"Text to translate:\n---\n{text_to_translate}")
+        
+        response = model.generate_content(prompt)
+        
+        print("Tool: Translation complete.")
+        return {"translated_text": response.text}
+
+    except Exception as e:
+        error_message = f"An error occurred during translation: {e}"
+        print(f"ERROR in gemini_client: {error_message}")
+        return {"error": error_message}
